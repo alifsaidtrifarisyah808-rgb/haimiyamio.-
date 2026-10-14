@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NekoVideo — Prototype</title>
+<style>
+:root{--bg:#07080d;--panel:#10131c;--pink:#ff4f9a;--pink2:#ff7b9f;--muted:#9298a8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f7;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:10;background:#080910f2;border-bottom:1px solid #202330}
+.nav{width:min(1200px,94%);margin:auto;height:64px;display:flex;align-items:center;gap:28px}.logo{font-size:22px;font-weight:800;color:var(--pink)}
+.nav a{color:#ddd;text-decoration:none}.search{margin-left:auto;width:min(320px,45vw);background:#121520;border:1px solid #2a2e3c;color:white;border-radius:10px;padding:11px 14px}
+.container{width:min(1200px,94%);margin:auto}.hero{min-height:340px;padding:70px 8%;display:flex;align-items:center;border-bottom:1px solid #191c26;background:radial-gradient(circle at 75% 45%,#35172f 0,#11121a 35%,#07080d 72%)}
+.hero h1{font-size:clamp(32px,6vw,62px);margin:8px 0}.eyebrow{text-transform:uppercase;letter-spacing:4px;color:#ff7ab3;font-size:11px;font-weight:bold}.hero p{max-width:600px;color:#a8adba;line-height:1.6}
+.btn{display:inline-block;margin-top:14px;padding:12px 20px;border-radius:10px;background:linear-gradient(90deg,var(--pink),var(--pink2));color:white;text-decoration:none;font-weight:bold}
+.section{padding:28px 0}.section h2{margin:0 0 16px;font-size:22px}.chips{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.chip{background:#141824;border:1px solid #282d3b;color:#ccc;padding:8px 14px;border-radius:18px}.chip.active{background:var(--pink);border-color:var(--pink);color:white}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid #202431;border-radius:12px;overflow:hidden;cursor:pointer}.thumb{aspect-ratio:16/10;background:linear-gradient(135deg,#292d3b,#171925);display:flex;align-items:center;justify-content:center;position:relative}
+.play{width:52px;height:52px;border-radius:50%;background:#fffffff0;color:#111;display:grid;place-items:center;font-size:22px}.badge{position:absolute;top:9px;right:9px;background:#ff3d96;color:#fff;padding:5px 8px;border-radius:7px;font-size:11px}
+.info{padding:12px}.title{font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{color:var(--muted);font-size:12px;margin-top:7px}
+.detail{display:none;padding:25px 0 50px}.back{color:#ddd;cursor:pointer;margin-bottom:20px}.video{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;border:1px solid #252938}
+.detailbox{background:var(--panel);border:1px solid #242837;border-radius:14px;padding:22px;margin-top:14px}.detail h1{margin:0 0 12px}.stats{color:var(--muted);margin-bottom:18px}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.action{background:#171c29;border:1px solid #303547;color:white;padding:13px;border-radius:10px;font-size:15px}.action.primary{background:linear-gradient(90deg,var(--pink),var(--pink2));border:0}
+footer{text-align:center;color:#646a79;padding:35px}@media(max-width:560px){.nav{gap:12px}.nav a{display:none}.search{width:48vw}.hero{min-height:300px;padding:50px 5%}.grid{gap:10px}.title{font-size:14px}.meta{font-size:11px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="logo">NekoVideo</div><a href="#" onclick="home()">Beranda</a><input id="search" class="search" placeholder="Cari video..."></div></header>
+<main class="container">
+<section id="home">
+<div class="hero"><div><div class="eyebrow">Selamat datang di</div><h1>NekoVideo</h1><p>Prototype website video dengan tampilan gelap, aksen pink, dan kartu video dua kolom yang nyaman di HP.</p><a class="btn" href="#koleksi">Jelajahi Koleksi ↓</a></div></div>
+<section class="section" id="koleksi"><h2>🔥 Video Terbaru</h2><div class="chips"><button class="chip active">Semua</button><button class="chip">Indonesia</button><button class="chip">Asia</button><button class="chip">Barat</button></div><div id="grid" class="grid"></div></section>
+</section>
+<section id="detail" class="detail"><div class="back" onclick="home()">← Kembali</div><video id="player" class="video" controls></video><div class="detailbox"><h1 id="dt"></h1><div id="dm" class="stats"></div><div class="actions"><button class="action primary">↓ Download</button><button class="action">♡ Like</button><button class="action">↗ Share</button><button class="action">🔗 Salin Link</button></div><p id="dd" style="color:#a4a9b7;margin-top:24px"></p></div></section>
+</main><footer>© 2026 NekoVideo — Prototype</footer>
+<script>
+const videos=[
+["Video Gaming Pertama","Gaming • 2.5K ditonton","Contoh halaman detail video."],
+["Tutorial Minecraft","Tutorial • 1.8K ditonton","Contoh video tutorial."],
+["Video Hiburan","Hiburan • 1.2K ditonton","Contoh video hiburan."],
+["Gameplay Seru","Gaming • 980 ditonton","Contoh video gameplay."],
+["Tips & Trik","Tutorial • 760 ditonton","Contoh video tips."],
+["Koleksi Pilihan","Hiburan • 540 ditonton","Contoh video pilihan."]
+];
+const grid=document.getElementById("grid");
+function render(q=""){grid.innerHTML=videos.filter(v=>v[0].toLowerCase().includes(q.toLowerCase())).map((v,i)=>`<article class="card" onclick="openVideo(${i})"><div class="thumb"><span class="play">▶</span><span class="badge">BARU</span></div><div class="info"><div class="title">${v[0]}</div><div class="meta">${v[1]}</div></div></article>`).join("")}
+function openVideo(i){let v=videos[i];document.getElementById("home").style.display="none";document.getElementById("detail").style.display="block";document.getElementById("dt").textContent=v[0];document.getElementById("dm").textContent=v[1];document.getElementById("dd").textContent=v[2];document.getElementById("player").removeAttribute("src");scrollTo(0,0)}
+function home(){document.getElementById("detail").style.display="none";document.getElementById("home").style.display="block";scrollTo(0,0)}
+document.getElementById("search").addEventListener("input",e=>render(e.target.value));render();
+</script>
+</body></html>
