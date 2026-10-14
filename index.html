@@ -387,26 +387,31 @@ header {
 }
 
 </style>
+<style>
+.background-photo{
+  position:fixed;
+  inset:0;
+  background-image:url("background.jpg");
+  background-size:cover;
+  background-position:center;
+  z-index:-2;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+    
 </head>
 
 <body>
 
 <!-- BACKGROUND VIDEO -->
 
-<video
-    class="background-video"
-    autoplay
-    muted
-    loop
-    playsinline>
-
-    <source src="background.mp4" type="video/mp4">
-
-</video>
-
-<div class="background-overlay"></div>
-
-
+<div class="background-photo"></div>
+<div class="overlay"></div>
+    
 <!-- HEADER -->
 
 <header>
