@@ -498,25 +498,18 @@ search.addEventListener(
 /* BUKA VIDEO */
 function openWatch(v){
 
-  document
-    .getElementById("home")
-    .style.display="none";
+  document.getElementById("home").style.display="none";
+  document.getElementById("watch").style.display="block";
 
-  document
-    .getElementById("watch")
-    .style.display="block";
+  document.getElementById("watchTitle").textContent=v.title;
 
-  document
-    .getElementById("watchTitle")
-    .textContent=v.title;
+  const player = document.getElementById("player");
 
-  const player =
-    document.getElementById("player");
-
-  player.src=v.file;
+  player.pause();
+  player.src = v.file;
+  player.load();
 
   window.scrollTo(0,0);
-
 }
 
 
