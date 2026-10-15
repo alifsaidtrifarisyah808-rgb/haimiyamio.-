@@ -192,9 +192,10 @@ header{
 
 .player{
   width:100%;
-  max-height:70vh;
+  height:70vh;
   background:#000;
   border-radius:12px;
+  border:none;
 }
 
 .watch h2{
@@ -350,12 +351,14 @@ header{
   </button>
 
   <video
-    class="player"
-    id="player"
-    controls
-  ></video>
-
-  <h2 id="watchTitle"></h2>
+    <iframe
+  class="player"
+  id="player"
+  allow="autoplay; fullscreen"
+  allowfullscreen>
+</iframe>  
+    
+<h2 id="watchTitle"></h2>
 
 </section>
 
@@ -368,11 +371,10 @@ const videos = [
   { title:"asia 1", category:"Asia", file:"c38gI01zU.mp4" },
 
   {
-    title:"asia 2",
-    category:"Asia",
-    file:"3kdyJA569.mp4"},
-
-  {
+  title:"asia 2",
+  category:"Asia",
+  file:"https://videy.co/v/?id=FMki4oJb1"
+},
     title:"Barat 1",
     category:"Barat",
     file:"video4.mp4"
